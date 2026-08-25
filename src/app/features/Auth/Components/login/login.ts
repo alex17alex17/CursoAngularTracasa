@@ -15,28 +15,14 @@ export class Login {
 
   credentials: Credenciales = {
     usuario: '',
-    contraseña: '',
+    password: '',
   };
 
   // 2. Función que se ejecuta al pulsar el botón "Ingresar"
   onLogin(): void {
-    const { usuario, contraseña } = this.credentials;
-
-    // Validación básica en el frontend
-    if (usuario.trim() === '' || contraseña.trim() === '') {
-      alert('Por favor, rellena todos los campos.');
-      return;
-    }
-
-    // Simulación de verificación de credenciales
-    if (usuario === 'admin' && contraseña === '1234') {
-      alert('¡Inicio de sesión correcto! Has accedido como EDITOR');
-      // Aquí redirigirías al usuario a la página principal
-    } else if (usuario === 'publico' && contraseña === '123') {
-      alert('¡Inicio de sesión correcto! Has accedido como LECTOR');
-      // Aquí redirigirías al usuario a la página principal
-    } else {
-      alert('Usuario o contraseña incorrectos.');
-    }
+    this.credencialesObtenidas.emit({
+      usuario: this.credentials.usuario,
+      password: this.credentials.password,
+    });
   }
 }

@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BusquedaExpedientes } from '../../Components/busqueda-expedientes/busqueda-expedientes';
 import { AltaExpediente } from '../../Components/alta-expediente/alta-expediente';
 import { EdicionExpediente } from '../../Components/edicion-expediente/edicion-expediente';
 import { EXPEDIENTES_MOCK } from '../../data/expediente-mock';
 import { FiltrosBusqueda } from '../../models/expediente-busqueda';
+import { ExpedienteClientService } from '../../services/expediente-client-service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-expedientes-page',
-  imports: [BusquedaExpedientes, AltaExpediente, EdicionExpediente],
+  imports: [BusquedaExpedientes, AltaExpediente, EdicionExpediente, AsyncPipe],
   templateUrl: './expedientes-page.html',
   styleUrl: './expedientes-page.css',
 })
 export class ExpedientesPage {
-  listaExpedientes = EXPEDIENTES_MOCK;
+  servicioExpediente = inject(ExpedienteClientService);
+
+  listaExpedientes = this.servicioExpediente.getExpedientes();
 
   private convertirFecha(fecha: string): string {
     if (fecha === '-') {
@@ -24,7 +28,7 @@ export class ExpedientesPage {
   }
 
   aplicarFiltro(filtros: FiltrosBusqueda): void {
-    const texto = filtros.texto.toLowerCase().trim();
+    /*const texto = filtros.texto.toLowerCase().trim();
 
     this.listaExpedientes = EXPEDIENTES_MOCK.filter((expediente) => {
       const coincideTexto =
@@ -49,6 +53,6 @@ export class ExpedientesPage {
         coincideFechaDesde &&
         coincideFechaHasta
       );
-    });
+    });*/
   }
 }
