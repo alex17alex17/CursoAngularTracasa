@@ -1,0 +1,55 @@
+<div class="login-container">
+
+  <h2>Iniciar Sesión</h2>
+
+  <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+
+    <!-- Usuario -->
+    <div class="form-group">
+
+      <div class="input-container">
+        <span class="input-icon">👤</span>
+
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="credentials.username"
+          required
+          placeholder="Usuario">
+      </div>
+
+    </div>
+
+    <!-- Contraseña -->
+    <div class="form-group">
+
+      <div class="input-container">
+        <span class="input-icon">🔒</span>
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="credentials.password"
+          required
+          placeholder="Contraseña">
+      </div>
+
+    </div>
+
+    <!-- Botón -->
+    <button
+      type="submit"
+      [disabled]="!loginForm.form.valid">
+      Entrar
+    </button>
+
+    <!-- Recuperar contraseña -->
+    <label>
+      ¿Has olvidado tu contraseña?
+    </label>
+
+  </form>
+
+</div>

@@ -1,0 +1,81 @@
+<section class="search-page" aria-labelledby="page-title">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">Gestión documental</p>
+      <h1 id="page-title">Búsqueda de expedientes</h1>
+      <p class="intro">Consulta y localiza expedientes de forma rápida.</p>
+    </div>
+    <span class="result-count">{{ expedientesTabla().length }} resultados</span>
+  </div>
+
+  <form class="filters" (submit)="buscarExpedientes()">
+    <input
+      type="search"
+      name="texto"
+      [(ngModel)]="filtros.texto"
+      placeholder="Buscar por palabra clave"
+    />
+
+    <select name="estado" [(ngModel)]="filtros.estado">
+      <option value="">Todos los estados</option>
+      <option>En trámite</option>
+      <option>Pendiente</option>
+      <option>En revisión</option>
+      <option>Finalizado</option>
+    </select>
+
+    <select name="prioridad" [(ngModel)]="filtros.prioridad">
+      <option value="">Todas las prioridades</option>
+      <option>Alta</option>
+      <option>Media</option>
+      <option>Baja</option>
+    </select>
+
+    <input type="date" name="fechaDesde" [(ngModel)]="filtros.fechaDesde" />
+
+    <input type="date" name="fechaHasta" [(ngModel)]="filtros.fechaHasta" />
+
+    <button class="search-button" type="submit">Buscar</button>
+    <button class="clear-button" type="button" (click)="limpiarFiltros()">Limpiar filtros</button>
+  </form>
+
+  <div class="table-wrapper">
+    <table>
+      <caption>
+        Listado de expedientes
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Nº Expediente</th>
+          <th scope="col">Título</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Prioridad</th>
+          <th scope="col">Fecha alta</th>
+          <th scope="col">Fecha baja</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (expediente of expedientesTabla(); track expediente.numero) {
+          <tr>
+            <td class="file-number">{{ expediente.numero }}</td>
+            <td class="title-cell">{{ expediente.titulo }}</td>
+            <td>
+              <span
+                class="status"
+                [class]="'status-' + expediente.estado.toLowerCase().replace(' ', '-')"
+                >{{ expediente.estado }}</span
+              >
+            </td>
+            <td>
+              <span class="priority" [class]="'priority-' + expediente.prioridad.toLowerCase()">{{
+                expediente.prioridad
+              }}</span>
+            </td>
+            <td>{{ expediente.fechaAlta }}</td>
+            <td>{{ expediente.fechaBaja }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

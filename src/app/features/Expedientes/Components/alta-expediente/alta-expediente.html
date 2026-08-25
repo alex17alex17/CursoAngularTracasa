@@ -1,0 +1,82 @@
+<section class="form-page" aria-labelledby="page-title">
+	<div class="page-heading">
+		<p class="eyebrow">Gestión documental</p>
+		<h1 id="page-title">Nuevo expediente</h1>
+		<p class="intro">Completa los datos para registrar un nuevo expediente.</p>
+	</div>
+
+	<form class="expediente-form" (submit)="$event.preventDefault()">
+		<div class="form-columns">
+			<div class="form-column">
+				<label class="field">
+					<span>Número</span>
+					<input type="text" name="numero" placeholder="Ej. EXP-2026-00125" />
+				</label>
+
+				<label class="field">
+					<span>Estado</span>
+					<select name="estado">
+						<option value="">Selecciona un estado</option>
+						<option>En trámite</option>
+						<option>Pendiente</option>
+						<option>En revisión</option>
+						<option>Finalizado</option>
+					</select>
+				</label>
+
+				<label class="field">
+					<span>Fecha alta</span>
+					<input type="date" name="fechaAlta" />
+				</label>
+
+				<label class="field">
+					<span>Solicitante</span>
+					<select name="solicitante">
+						<option value="">Selecciona un solicitante</option>
+						<option>Área de Urbanismo</option>
+						<option>María García López</option>
+						<option>Asociación Cultural Centro</option>
+						<option>Javier Martín Ruiz</option>
+					</select>
+				</label>
+			</div>
+
+			<div class="form-column">
+				<label class="field">
+					<span>Título</span>
+					<input type="text" name="titulo" placeholder="Título del expediente" />
+				</label>
+
+				<label class="field">
+					<span>Prioridad</span>
+					<select name="prioridad">
+						<option value="">Selecciona una prioridad</option>
+						<option>Alta</option>
+						<option>Media</option>
+						<option>Baja</option>
+					</select>
+				</label>
+
+				<label class="field">
+					<span>Fecha de vencimiento</span>
+					<input type="date" name="fechaVencimiento" />
+				</label>
+
+				<label class="field">
+					<span>Unidad</span>
+					<input type="text" name="unidad" placeholder="Unidad responsable" />
+				</label>
+			</div>
+		</div>
+
+		<label class="field description-field">
+			<span>Descripción</span>
+			<textarea name="descripcion" rows="5" placeholder="Añade una descripción del expediente"></textarea>
+		</label>
+
+		<div class="form-actions">
+			<button class="cancel-button" type="button">Cancelar</button>
+			<button class="create-button" type="submit">Crear</button>
+		</div>
+	</form>
+</section>

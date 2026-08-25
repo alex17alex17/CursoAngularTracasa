@@ -1,0 +1,163 @@
+:host {
+	display: block;
+	width: min(1000px, calc(100% - 40px));
+	margin: 42px auto;
+	color: #172b4d;
+}
+
+.form-page {
+	padding: 32px;
+	background: #f8fbff;
+	border: 1px solid rgba(255, 255, 255, 0.7);
+	border-radius: 12px;
+	box-shadow: 0 22px 45px rgba(31, 67, 114, 0.2);
+}
+
+.page-heading {
+	margin-bottom: 28px;
+}
+
+.eyebrow {
+	margin: 0 0 8px;
+	color: #087f8c;
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+h1 {
+	margin: 0;
+	color: #102a43;
+	font-size: clamp(1.65rem, 3vw, 2.35rem);
+	letter-spacing: 0;
+}
+
+.intro {
+	margin: 8px 0 0;
+	color: #627d98;
+}
+
+.form-columns {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 28px;
+}
+
+.form-column {
+	display: grid;
+	gap: 20px;
+}
+
+.field {
+	display: grid;
+	gap: 7px;
+	min-width: 0;
+}
+
+.field > span {
+	color: #486581;
+	font-size: 0.78rem;
+	font-weight: 700;
+}
+
+input,
+select,
+textarea {
+	width: 100%;
+	min-width: 0;
+	padding: 0 12px;
+	color: #243b53;
+	background: #fff;
+	border: 1px solid #bcccdc;
+	border-radius: 6px;
+	font: inherit;
+	box-sizing: border-box;
+}
+
+input,
+select {
+	height: 44px;
+}
+
+textarea {
+	min-height: 130px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 3px solid rgba(8, 127, 140, 0.18);
+	border-color: #087f8c;
+}
+
+.description-field {
+	margin-top: 26px;
+}
+
+.form-actions {
+	display: flex;
+	justify-content: flex-start;
+	gap: 12px;
+	margin-top: 30px;
+}
+
+.form-actions button {
+	min-width: 104px;
+	height: 42px;
+	padding: 0 18px;
+	border-radius: 6px;
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.form-actions button:hover {
+	transform: translateY(-1px);
+}
+
+.cancel-button {
+	color: #52606d;
+	background: #fff;
+	border: 1px solid #bcccdc;
+}
+
+.cancel-button:hover {
+	background: #f0f4f8;
+	border-color: #9fb3c8;
+}
+
+.create-button {
+	color: #fff;
+	background: #087f8c;
+	border: 1px solid #087f8c;
+}
+
+.create-button:hover {
+	background: #056873;
+	border-color: #056873;
+}
+
+@media (max-width: 640px) {
+	:host {
+		width: min(100% - 24px, 1000px);
+		margin: 24px auto;
+	}
+
+	.form-page {
+		padding: 20px 16px;
+	}
+
+	.form-columns {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+
+	.description-field {
+		margin-top: 20px;
+	}
+}
