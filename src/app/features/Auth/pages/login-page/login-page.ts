@@ -21,11 +21,11 @@ export class LoginPage {
     // Simulación de verificación de credenciales
     if (credenciales.usuario === 'admin' && credenciales.password === '1234') {
       alert('¡Inicio de sesión correcto! Has accedido como EDITOR');
-      this.router.navigate(['expedientes']); // Redirige a la página de expedientes
+      this.router.navigate(['expedienteBusqueda']); // Redirige a la página de expedientes
       // Aquí redirigirías al usuario a la página principal
     } else if (credenciales.usuario === 'publico' && credenciales.password === '123') {
       alert('¡Inicio de sesión correcto! Has accedido como LECTOR');
-      this.router.navigate(['expedientes']); // Redirige a la página de expedientes
+      this.router.navigate(['expedienteBusqueda']); // Redirige a la página de expedientes
       // Aquí redirigirías al usuario a la página principal
     } else {
       alert('Usuario o contraseña incorrectos.');

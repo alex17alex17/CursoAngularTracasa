@@ -1,13 +1,22 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { ExpedienteResponse } from '../models/expediente-interface';
+import { Expediente } from '../models/expediente-interface';
+import { FiltrosBusqueda } from '../models/expediente-busqueda';
 import { Observable } from 'rxjs';
 
 @Service()
 export class ExpedienteClientService {
   private httpClient = inject(HttpClient);
 
-  getExpedientes(): Observable<ExpedienteResponse> {
-    return this.httpClient.get<ExpedienteResponse>('/api/expedientes');
+  getExpedientes(filtros: FiltrosBusqueda): Observable<Expediente[]> {
+    let params = new HttpParams();
+
+    for (const [nombre, valor] of Object.entries(filtros)) {
+      if (valor) {
+        params = params.set(nombre, valor);
+      }
+    }
+
+    return this.httpClient.get<Expediente[]>('/api/expedientes', { params });
   }
 }

@@ -1,58 +1,43 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 import { BusquedaExpedientes } from '../../Components/busqueda-expedientes/busqueda-expedientes';
 import { AltaExpediente } from '../../Components/alta-expediente/alta-expediente';
 import { EdicionExpediente } from '../../Components/edicion-expediente/edicion-expediente';
-import { EXPEDIENTES_MOCK } from '../../data/expediente-mock';
 import { FiltrosBusqueda } from '../../models/expediente-busqueda';
 import { ExpedienteClientService } from '../../services/expediente-client-service';
-import { AsyncPipe } from '@angular/common';
+import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-expedientes-page',
-  imports: [BusquedaExpedientes, AltaExpediente, EdicionExpediente, AsyncPipe],
+  imports: [BusquedaExpedientes, AltaExpediente, EdicionExpediente],
   templateUrl: './expedientes-page.html',
   styleUrl: './expedientes-page.css',
 })
 export class ExpedientesPage {
   servicioExpediente = inject(ExpedienteClientService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
-  listaExpedientes = this.servicioExpediente.getExpedientes();
+  filtros = signal<FiltrosBusqueda>({
+    texto: '',
+    estado: '',
+    prioridad: '',
+    fechaDesde: '',
+    fechaHasta: '',
+  });
 
-  private convertirFecha(fecha: string): string {
-    if (fecha === '-') {
-      return '';
-    }
+  recursoCambioFiltro = rxResource({
+    params: () => this.filtros(),
+    stream: ({ params }) => this.servicioExpediente.getExpedientes(params),
+  });
 
-    const [dia, mes, anio] = fecha.split('/');
-    return `${anio}-${mes}-${dia}`;
-  }
+  cargandoExpedientes = this.recursoCambioFiltro.isLoading;
+  errorExpedientes = this.recursoCambioFiltro.error;
+  respuestaExpedientes = this.recursoCambioFiltro.value;
+  listaExpedientes = computed(() => this.respuestaExpedientes() ?? []);
 
   aplicarFiltro(filtros: FiltrosBusqueda): void {
-    /*const texto = filtros.texto.toLowerCase().trim();
-
-    this.listaExpedientes = EXPEDIENTES_MOCK.filter((expediente) => {
-      const coincideTexto =
-        !texto ||
-        expediente.numero.toLowerCase().includes(texto) ||
-        expediente.titulo.toLowerCase().includes(texto);
-
-      const coincideEstado = !filtros.estado || expediente.estado === filtros.estado;
-
-      const coincidePrioridad = !filtros.prioridad || expediente.prioridad === filtros.prioridad;
-
-      const coincideFechaDesde =
-        !filtros.fechaDesde || this.convertirFecha(expediente.fechaAlta) >= filtros.fechaDesde;
-
-      const coincideFechaHasta =
-        !filtros.fechaHasta || this.convertirFecha(expediente.fechaAlta) <= filtros.fechaHasta;
-
-      return (
-        coincideTexto &&
-        coincideEstado &&
-        coincidePrioridad &&
-        coincideFechaDesde &&
-        coincideFechaHasta
-      );
-    });*/
+    this.filtros.set({ ...filtros });
   }
 }

@@ -1,4 +1,4 @@
 <app-busqueda-expedientes
-  [expedientesTabla]="listaExpedientes | async"
+  [expedientesTabla]="listaExpedientes()"
   (filtroTabla)="aplicarFiltro($event)"
 ></app-busqueda-expedientes>
