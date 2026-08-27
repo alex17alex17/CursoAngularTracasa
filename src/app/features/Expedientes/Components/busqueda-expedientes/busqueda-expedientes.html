@@ -55,7 +55,11 @@
       </thead>
       <tbody>
         @for (expediente of expedientesTabla() ?? []; track expediente.numero) {
-          <tr>
+          <tr
+            (click)="expedienteSeleccionado.emit(expediente)"
+            (keydown.enter)="expedienteSeleccionado.emit(expediente)"
+            tabindex="0"
+          >
             <td class="file-number">{{ expediente.numero }}</td>
             <td class="title-cell">{{ expediente.titulo }}</td>
             <td>

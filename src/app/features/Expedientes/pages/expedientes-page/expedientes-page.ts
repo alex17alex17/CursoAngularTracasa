@@ -5,6 +5,7 @@ import { BusquedaExpedientes } from '../../Components/busqueda-expedientes/busqu
 import { AltaExpediente } from '../../Components/alta-expediente/alta-expediente';
 import { EdicionExpediente } from '../../Components/edicion-expediente/edicion-expediente';
 import { FiltrosBusqueda } from '../../models/expediente-busqueda';
+import { Expediente } from '../../models/expediente-interface';
 import { ExpedienteClientService } from '../../services/expediente-client-service';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 
@@ -79,6 +80,12 @@ export class ExpedientesPage {
       relativeTo: this.route,
       queryParams: { pagina: numeroPagina },
       queryParamsHandling: 'merge',
+    });
+  }
+
+  editarExpediente(expediente: Expediente): void {
+    this.router.navigate(['expedienteEdicion', expediente.numero], {
+      state: { expediente },
     });
   }
 }

@@ -1,82 +1,84 @@
 <section class="form-page" aria-labelledby="page-title">
-	<div class="page-heading">
-		<p class="eyebrow">Gestión documental</p>
-		<h1 id="page-title">Editar expediente</h1>
-		<p class="intro">Actualiza los datos del expediente seleccionado.</p>
-	</div>
+  <div class="page-heading">
+    <p class="eyebrow">Gestión documental</p>
+    <h1 id="page-title">Editar expediente</h1>
+    <p class="intro">Actualiza los datos del expediente seleccionado.</p>
+  </div>
 
-	<form class="expediente-form" (submit)="$event.preventDefault()">
-		<div class="form-columns">
-			<div class="form-column">
-				<label class="field">
-					<span>Número</span>
-					<input type="text" name="numero" value="EXP-2026-00124" />
-				</label>
+  <form class="expediente-form" (submit)="$event.preventDefault()">
+    <div class="form-columns">
+      <div class="form-column">
+        <label class="field">
+          <span>Número</span>
+          <input type="text" name="numero" [value]="expediente()?.numero ?? ''" />
+        </label>
 
-				<label class="field">
-					<span>Estado</span>
-					<select name="estado">
-						<option>En trámite</option>
-						<option>Pendiente</option>
-						<option>En revisión</option>
-						<option>Finalizado</option>
-					</select>
-				</label>
+        <label class="field">
+          <span>Estado</span>
+          <select name="estado" [value]="expediente()?.estado ?? ''">
+            <option value="abierto">Abierto</option>
+            <option value="en_proceso">En proceso</option>
+            <option value="cerrado">Cerrado</option>
+          </select>
+        </label>
 
-				<label class="field">
-					<span>Fecha alta</span>
-					<input type="date" name="fechaAlta" value="2026-01-12" />
-				</label>
+        <label class="field">
+          <span>Fecha alta</span>
+          <input type="date" name="fechaAlta" [value]="fechaComoTexto(expediente()?.fechaAlta)" />
+        </label>
 
-				<label class="field">
-					<span>Solicitante</span>
-					<select name="solicitante">
-						<option>Área de Urbanismo</option>
-						<option>María García López</option>
-						<option>Asociación Cultural Centro</option>
-						<option>Javier Martín Ruiz</option>
-					</select>
-				</label>
-			</div>
+        <label class="field">
+          <span>Solicitante</span>
+          <select name="solicitante" [value]="expediente()?.solicitante ?? ''">
+            <option [value]="expediente()?.solicitante ?? ''">
+              {{ expediente()?.solicitante ?? 'Solicitante' }}
+            </option>
+          </select>
+        </label>
+      </div>
 
-			<div class="form-column">
-				<label class="field">
-					<span>Título</span>
-					<input type="text" name="titulo" value="Rehabilitación del edificio municipal" />
-				</label>
+      <div class="form-column">
+        <label class="field">
+          <span>Título</span>
+          <input type="text" name="titulo" [value]="expediente()?.titulo ?? ''" />
+        </label>
 
-				<label class="field">
-					<span>Prioridad</span>
-					<select name="prioridad">
-						<option>Alta</option>
-						<option>Media</option>
-						<option>Baja</option>
-					</select>
-				</label>
+        <label class="field">
+          <span>Prioridad</span>
+          <select name="prioridad" [value]="expediente()?.prioridad ?? ''">
+            <option value="alta">Alta</option>
+            <option value="media">Media</option>
+            <option value="baja">Baja</option>
+          </select>
+        </label>
 
-				<label class="field">
-					<span>Fecha vencimiento</span>
-					<input type="date" name="fechaVencimiento" value="2026-06-30" />
-				</label>
+        <label class="field">
+          <span>Fecha vencimiento</span>
+          <input
+            type="date"
+            name="fechaVencimiento"
+            [value]="fechaComoTexto(expediente()?.fechaVencimiento)"
+          />
+        </label>
 
-				<label class="field">
-					<span>Unidad</span>
-					<input type="text" name="unidad" value="Servicio de Urbanismo" />
-				</label>
-			</div>
-		</div>
+        <label class="field">
+          <span>Unidad</span>
+          <input type="text" name="unidad" [value]="expediente()?.unidad ?? ''" />
+        </label>
+      </div>
+    </div>
 
-		<label class="field description-field">
-			<span>Descripción</span>
-			<textarea name="descripcion" rows="5">Expediente para la mejora y rehabilitación de las instalaciones del edificio municipal.</textarea>
-		</label>
+    <label class="field description-field">
+      <span>Descripción</span>
+      <textarea name="descripcion" rows="5">{{ expediente()?.descripcion ?? '' }}</textarea>
+    </label>
 
-		<div class="form-actions">
-			<button class="delete-button" type="button">Eliminar expediente</button>
-			<div class="right-actions">
-				<button class="cancel-button" type="button">Cancelar</button>
-				<button class="save-button" type="submit">Guardar</button>
-			</div>
-		</div>
-	</form>
+    <div class="form-actions">
+      <button class="delete-button" type="button">Eliminar expediente</button>
+      <div class="right-actions">
+        <button class="cancel-button" type="button">Cancelar</button>
+        <button class="save-button" type="submit">Guardar</button>
+      </div>
+    </div>
+  </form>
 </section>

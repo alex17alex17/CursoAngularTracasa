@@ -16,6 +16,7 @@ export class BusquedaExpedientes {
   totalPaginas = input(1);
   filtroTabla = output<FiltrosBusqueda>();
   cambioPagina = output<number>();
+  expedienteSeleccionado = output<Expediente>();
 
   filtros: FiltrosBusqueda = {
     texto: '',
