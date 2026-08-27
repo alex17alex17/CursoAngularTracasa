@@ -12,7 +12,10 @@ import { BusquedaExpedientesPaginacion } from '../busqueda-expedientes-paginacio
 })
 export class BusquedaExpedientes {
   expedientesTabla = input<Expediente[] | null>();
+  numeroPagina = input(1);
+  totalPaginas = input(1);
   filtroTabla = output<FiltrosBusqueda>();
+  cambioPagina = output<number>();
 
   filtros: FiltrosBusqueda = {
     texto: '',

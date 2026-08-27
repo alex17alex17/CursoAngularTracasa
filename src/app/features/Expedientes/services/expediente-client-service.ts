@@ -1,14 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { Expediente } from '../models/expediente-interface';
+import { Expediente, ExpedientePageResponse } from '../models/expediente-interface';
 import { FiltrosBusqueda } from '../models/expediente-busqueda';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Service()
 export class ExpedienteClientService {
   private httpClient = inject(HttpClient);
 
-  getExpedientes(filtros: FiltrosBusqueda): Observable<Expediente[]> {
+  getExpedientes(
+    filtros: FiltrosBusqueda,
+    pagina = 1,
+    porPagina = 5,
+  ): Observable<ExpedientePageResponse> {
     let params = new HttpParams();
 
     for (const [nombre, valor] of Object.entries(filtros)) {
@@ -17,6 +21,17 @@ export class ExpedienteClientService {
       }
     }
 
-    return this.httpClient.get<Expediente[]>('/api/expedientes', { params });
+    params = params.set('pagina', pagina).set('porPagina', porPagina);
+
+    return this.httpClient
+      .get<Expediente[]>('/api/expedientes', { params, observe: 'response' })
+      .pipe(
+        map(
+          (respuesta): ExpedientePageResponse => ({
+            datos: respuesta.body ?? [],
+            total: Number(respuesta.headers.get('X-Total-Count')) || 0,
+          }),
+        ),
+      );
   }
 }

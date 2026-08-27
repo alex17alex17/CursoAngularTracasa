@@ -22,5 +22,10 @@ export interface Expediente {
   descripcion: string;
 }
 
+export interface ExpedientePageResponse {
+  datos: Expediente[];
+  total: number;
+}
+
 export type EstadoExpediente = 'abierto' | 'cerrado' | 'en_proceso';
 export type PrioridadExpediente = 'alta' | 'media' | 'baja';

@@ -1,5 +1,19 @@
-<div>
-  <button>Anterior</button>
-  <span>{{ paginaActual() }}</span>
-  <button>Siguiente</button>
+<div class="paginacion">
+  <button
+    class="paginacion__boton"
+    type="button"
+    [disabled]="numeroPagina() === 1"
+    (click)="paginaAnterior()"
+  >
+    Anterior
+  </button>
+  <span class="paginacion__numero" aria-label="Página actual">{{ numeroPagina() }}</span>
+  <button
+    class="paginacion__boton"
+    type="button"
+    [disabled]="numeroPagina() === totalPaginas()"
+    (click)="paginaSiguiente()"
+  >
+    Siguiente
+  </button>
 </div>

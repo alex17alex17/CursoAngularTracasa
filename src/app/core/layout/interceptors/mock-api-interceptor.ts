@@ -1,4 +1,4 @@
-import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 
 import { of } from 'rxjs';
 import { EXPEDIENTES_MOCK } from '../../../features/Expedientes/data/expediente-mock';
@@ -10,6 +10,8 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     const prioridad = req.params.get('prioridad') ?? '';
     const fechaDesde = req.params.get('fechaDesde') ?? '';
     const fechaHasta = req.params.get('fechaHasta') ?? '';
+    const pagina = Math.max(Number(req.params.get('pagina')) || 1, 1);
+    const porPagina = Math.max(Number(req.params.get('porPagina')) || 5, 1);
 
     const expedientesFiltrados = EXPEDIENTES_MOCK.filter((expediente) => {
       const fechaAlta = expediente.fechaAlta.toISOString().slice(0, 10);
@@ -27,10 +29,16 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
       );
     });
 
+    const inicio = (pagina - 1) * porPagina;
+    const expedientesPagina = expedientesFiltrados.slice(inicio, inicio + porPagina);
+
     return of(
       new HttpResponse({
         status: 200,
-        body: expedientesFiltrados,
+        headers: new HttpHeaders({
+          'X-Total-Count': String(expedientesFiltrados.length),
+        }),
+        body: expedientesPagina,
       }),
     );
   }

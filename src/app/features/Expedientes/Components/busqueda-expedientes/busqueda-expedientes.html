@@ -76,6 +76,10 @@
         }
       </tbody>
     </table>
-    <app-busqueda-expedientes-paginacion></app-busqueda-expedientes-paginacion>
+    <app-busqueda-expedientes-paginacion
+      [numeroPagina]="numeroPagina()"
+      [totalPaginas]="totalPaginas()"
+      (cambioPagina)="cambioPagina.emit($event)"
+    ></app-busqueda-expedientes-paginacion>
   </div>
 </section>

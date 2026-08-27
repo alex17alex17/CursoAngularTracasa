@@ -18,18 +18,17 @@ export class ExpedientesPage {
   servicioExpediente = inject(ExpedienteClientService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  porPagina = 5;
 
   filtros = toSignal(
     this.route.queryParamMap.pipe(
-      map(
-        (params): FiltrosBusqueda => ({
-          texto: params.get('texto') ?? '',
-          estado: params.get('estado') ?? '',
-          prioridad: params.get('prioridad') ?? '',
-          fechaDesde: params.get('fechaDesde') ?? '',
-          fechaHasta: params.get('fechaHasta') ?? '',
-        }),
-      ),
+      map((params): FiltrosBusqueda => ({
+        texto: params.get('texto') ?? '',
+        estado: params.get('estado') ?? '',
+        prioridad: params.get('prioridad') ?? '',
+        fechaDesde: params.get('fechaDesde') ?? '',
+        fechaHasta: params.get('fechaHasta') ?? '',
+      })),
     ),
     {
       initialValue: {
@@ -42,15 +41,24 @@ export class ExpedientesPage {
     },
   );
 
+  numeroPagina = toSignal(
+    this.route.queryParamMap.pipe(map((params) => Number(params.get('pagina')) || 1)),
+    { initialValue: 1 },
+  );
+
   recursoCambioFiltro = rxResource({
-    params: () => this.filtros(),
-    stream: ({ params }) => this.servicioExpediente.getExpedientes(params),
+    params: () => ({ filtros: this.filtros(), pagina: this.numeroPagina() }),
+    stream: ({ params }) =>
+      this.servicioExpediente.getExpedientes(params.filtros, params.pagina, this.porPagina),
   });
 
   cargandoExpedientes = this.recursoCambioFiltro.isLoading;
   errorExpedientes = this.recursoCambioFiltro.error;
   respuestaExpedientes = this.recursoCambioFiltro.value;
-  listaExpedientes = computed(() => this.respuestaExpedientes() ?? []);
+  listaExpedientes = computed(() => this.respuestaExpedientes()?.datos ?? []);
+  totalPaginas = computed(() =>
+    Math.max(1, Math.ceil((this.respuestaExpedientes()?.total ?? 0) / this.porPagina)),
+  );
 
   aplicarFiltro(filtros: FiltrosBusqueda): void {
     this.router.navigate([], {
@@ -61,8 +69,16 @@ export class ExpedientesPage {
         prioridad: filtros.prioridad || null,
         fechaDesde: filtros.fechaDesde || null,
         fechaHasta: filtros.fechaHasta || null,
+        pagina: 1,
       },
     });
+  }
 
+  cambiarPagina(numeroPagina: number): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { pagina: numeroPagina },
+      queryParamsHandling: 'merge',
+    });
   }
 }

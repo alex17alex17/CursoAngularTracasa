@@ -1,4 +1,7 @@
 <app-busqueda-expedientes
   [expedientesTabla]="listaExpedientes()"
+  [numeroPagina]="numeroPagina()"
+  [totalPaginas]="totalPaginas()"
   (filtroTabla)="aplicarFiltro($event)"
+  (cambioPagina)="cambiarPagina($event)"
 ></app-busqueda-expedientes>
