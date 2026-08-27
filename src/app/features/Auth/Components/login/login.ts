@@ -1,28 +1,30 @@
-import { Component, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, output, signal } from '@angular/core';
 import { Credenciales } from '../../models/usuario-interface';
+import { form, FormField, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormField],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
-  // 1. Objeto donde se guardan los campos del formulario
-
   credencialesObtenidas = output<Credenciales>();
 
-  credentials: Credenciales = {
+  loginModel = signal({
     usuario: '',
     password: '',
-  };
+  });
 
-  // 2. Función que se ejecuta al pulsar el botón "Ingresar"
+  loginForm = form(this.loginModel, (schemaPath) => {
+    required(schemaPath.usuario, { message: 'El usuario es obligatorio' });
+    required(schemaPath.password, { message: 'La contraseña es obligatoria' });
+  });
+
   onLogin(): void {
     this.credencialesObtenidas.emit({
-      usuario: this.credentials.usuario,
-      password: this.credentials.password,
+      usuario: this.loginModel().usuario,
+      password: this.loginModel().password,
     });
   }
 }

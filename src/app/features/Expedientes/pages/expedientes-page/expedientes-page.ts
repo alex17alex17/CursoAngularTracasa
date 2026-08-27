@@ -19,13 +19,28 @@ export class ExpedientesPage {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  filtros = signal<FiltrosBusqueda>({
-    texto: '',
-    estado: '',
-    prioridad: '',
-    fechaDesde: '',
-    fechaHasta: '',
-  });
+  filtros = toSignal(
+    this.route.queryParamMap.pipe(
+      map(
+        (params): FiltrosBusqueda => ({
+          texto: params.get('texto') ?? '',
+          estado: params.get('estado') ?? '',
+          prioridad: params.get('prioridad') ?? '',
+          fechaDesde: params.get('fechaDesde') ?? '',
+          fechaHasta: params.get('fechaHasta') ?? '',
+        }),
+      ),
+    ),
+    {
+      initialValue: {
+        texto: '',
+        estado: '',
+        prioridad: '',
+        fechaDesde: '',
+        fechaHasta: '',
+      },
+    },
+  );
 
   recursoCambioFiltro = rxResource({
     params: () => this.filtros(),
@@ -38,6 +53,16 @@ export class ExpedientesPage {
   listaExpedientes = computed(() => this.respuestaExpedientes() ?? []);
 
   aplicarFiltro(filtros: FiltrosBusqueda): void {
-    this.filtros.set({ ...filtros });
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        texto: filtros.texto || null,
+        estado: filtros.estado || null,
+        prioridad: filtros.prioridad || null,
+        fechaDesde: filtros.fechaDesde || null,
+        fechaHasta: filtros.fechaHasta || null,
+      },
+    });
+
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Credenciales } from '../../models/usuario-interface';
 import { Router } from '@angular/router';
 import { Login } from '../../Components/login/login';
