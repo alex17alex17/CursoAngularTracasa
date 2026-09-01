@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { BusquedaExpedientes } from '../../Components/busqueda-expedientes/busqueda-expedientes';
@@ -20,6 +20,17 @@ export class ExpedientesPage {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   porPagina = 5;
+  eliminarSolicitado = signal(false);
+  expedienteAEliminar = signal<Expediente | null>(null);
+
+  constructor() {
+    const state = history.state as { eliminarSolicitado?: boolean; expediente?: Expediente } | null;
+
+    if (state?.eliminarSolicitado) {
+      this.eliminarSolicitado.set(true);
+      this.expedienteAEliminar.set(state.expediente ?? null);
+    }
+  }
 
   filtros = toSignal(
     this.route.queryParamMap.pipe(
@@ -87,5 +98,17 @@ export class ExpedientesPage {
     this.router.navigate(['expedienteEdicion', expediente.numero], {
       state: { expediente },
     });
+  }
+
+  confirmarEliminacion(): void {
+    const expediente = this.expedienteAEliminar();
+
+    if (!expediente) {
+      return;
+    }
+
+    console.log('Eliminar expediente solicitado:', expediente);
+    this.eliminarSolicitado.set(false);
+    this.expedienteAEliminar.set(null);
   }
 }

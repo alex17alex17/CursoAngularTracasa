@@ -29,11 +29,7 @@
 
         <label class="field">
           <span>Solicitante</span>
-          <select name="solicitante" [value]="expediente()?.solicitante ?? ''">
-            <option [value]="expediente()?.solicitante ?? ''">
-              {{ expediente()?.solicitante ?? 'Solicitante' }}
-            </option>
-          </select>
+          <input type="text" name="solicitante" [value]="expediente()?.solicitante ?? ''" />
         </label>
       </div>
 
@@ -74,9 +70,11 @@
     </label>
 
     <div class="form-actions">
-      <button class="delete-button" type="button">Eliminar expediente</button>
+      <button class="delete-button" type="button" (click)="eliminarExpediente()">
+        Eliminar expediente
+      </button>
       <div class="right-actions">
-        <button class="cancel-button" type="button">Cancelar</button>
+        <button class="cancel-button" type="button" (click)="cancelar()">Cancelar</button>
         <button class="save-button" type="submit">Guardar</button>
       </div>
     </div>
