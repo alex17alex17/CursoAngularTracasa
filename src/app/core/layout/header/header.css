@@ -1,23 +1,11 @@
-:host {
-	display: block;
-	width: 100%;
-}
-
-.site-header {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	min-height: 68px;
-	padding: 0 24px;
-	color: #fff;
-	background: #1261a0;
-	box-sizing: border-box;
-}
-
-.site-header p {
-	margin: 0;
-	font-size: 1.15rem;
-	font-weight: 700;
-	letter-spacing: 0.02em;
+.header-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 68px;
+  padding: 0 24px;
+  box-sizing: border-box;
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
 }

@@ -9,77 +9,115 @@
   </div>
 
   <form class="filters" (submit)="buscarExpedientes()">
-    <input
-      type="search"
-      name="texto"
-      [(ngModel)]="filtros.texto"
-      placeholder="Buscar por palabra clave"
-    />
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar</mat-label>
+      <input
+        matInput
+        type="search"
+        name="texto"
+        [(ngModel)]="filtros.texto"
+        placeholder="Buscar por palabra clave"
+      />
+    </mat-form-field>
 
-    <select name="estado" [(ngModel)]="filtros.estado">
-      <option value="">Todos los estados</option>
-      <option value="abierto">Abierto</option>
-      <option value="en_proceso">En proceso</option>
-      <option value="cerrado">Cerrado</option>
-    </select>
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select name="estado" [(ngModel)]="filtros.estado">
+        <mat-option value="">Todos los estados</mat-option>
+        <mat-option value="abierto">Abierto</mat-option>
+        <mat-option value="en_proceso">En proceso</mat-option>
+        <mat-option value="cerrado">Cerrado</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <select name="prioridad" [(ngModel)]="filtros.prioridad">
-      <option value="">Todas las prioridades</option>
-      <option value="alta">Alta</option>
-      <option value="media">Media</option>
-      <option value="baja">Baja</option>
-    </select>
+    <mat-form-field appearance="outline">
+      <mat-label>Prioridad</mat-label>
+      <mat-select name="prioridad" [(ngModel)]="filtros.prioridad">
+        <mat-option value="">Todas las prioridades</mat-option>
+        <mat-option value="alta">Alta</mat-option>
+        <mat-option value="media">Media</mat-option>
+        <mat-option value="baja">Baja</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <input type="date" name="fechaDesde" [(ngModel)]="filtros.fechaDesde" />
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha desde</mat-label>
+      <input matInput type="date" name="fechaDesde" [(ngModel)]="filtros.fechaDesde" />
+    </mat-form-field>
 
-    <input type="date" name="fechaHasta" [(ngModel)]="filtros.fechaHasta" />
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha hasta</mat-label>
+      <input matInput type="date" name="fechaHasta" [(ngModel)]="filtros.fechaHasta" />
+    </mat-form-field>
 
-    <button class="search-button" type="submit">Buscar</button>
-    <button class="clear-button" type="button" (click)="limpiarFiltros()">Limpiar filtros</button>
+    <button mat-flat-button color="primary" class="search-button" type="submit">Buscar</button>
+    <button
+      mat-stroked-button
+      color="primary"
+      class="clear-button"
+      type="button"
+      (click)="limpiarFiltros()"
+    >
+      Limpiar filtros
+    </button>
   </form>
 
   <div class="table-wrapper">
-    <table>
-      <caption>
-        Listado de expedientes
-      </caption>
-      <thead>
-        <tr>
-          <th scope="col">Nº Expediente</th>
-          <th scope="col">Título</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Prioridad</th>
-          <th scope="col">Fecha alta</th>
-          <th scope="col">Fecha baja</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (expediente of expedientesTabla() ?? []; track expediente.numero) {
-          <tr
-            (click)="expedienteSeleccionado.emit(expediente)"
-            (keydown.enter)="expedienteSeleccionado.emit(expediente)"
-            tabindex="0"
+    <table
+      mat-table
+      [dataSource]="expedientesTabla() ?? []"
+      class="mat-elevation-z2 expediente-table"
+    >
+      <ng-container matColumnDef="numero">
+        <th mat-header-cell *matHeaderCellDef>Nº Expediente</th>
+        <td mat-cell *matCellDef="let expediente">{{ expediente.numero }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="titulo">
+        <th mat-header-cell *matHeaderCellDef>Título</th>
+        <td mat-cell *matCellDef="let expediente">{{ expediente.titulo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let expediente">
+          <span
+            class="status"
+            [class]="'status-' + expediente.estado.toLowerCase().replace(' ', '-')"
           >
-            <td class="file-number">{{ expediente.numero }}</td>
-            <td class="title-cell">{{ expediente.titulo }}</td>
-            <td>
-              <span
-                class="status"
-                [class]="'status-' + expediente.estado.toLowerCase().replace(' ', '-')"
-                >{{ expediente.estado }}</span
-              >
-            </td>
-            <td>
-              <span class="priority" [class]="'priority-' + expediente.prioridad.toLowerCase()">{{
-                expediente.prioridad
-              }}</span>
-            </td>
-            <td>{{ expediente.fechaAlta }}</td>
-            <td>{{ expediente.fechaVencimiento }}</td>
-          </tr>
-        }
-      </tbody>
+            {{ expediente.estado }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="prioridad">
+        <th mat-header-cell *matHeaderCellDef>Prioridad</th>
+        <td mat-cell *matCellDef="let expediente">
+          <span class="priority" [class]="'priority-' + expediente.prioridad.toLowerCase()">
+            {{ expediente.prioridad }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fechaAlta">
+        <th mat-header-cell *matHeaderCellDef>Fecha alta</th>
+        <td mat-cell *matCellDef="let expediente">{{ expediente.fechaAlta }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fechaVencimiento">
+        <th mat-header-cell *matHeaderCellDef>Fecha vencimiento</th>
+        <td mat-cell *matCellDef="let expediente">{{ expediente.fechaVencimiento }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let expediente; columns: displayedColumns"
+        class="expediente-row"
+        (click)="expedienteSeleccionado.emit(expediente)"
+      ></tr>
     </table>
+
     <app-busqueda-expedientes-paginacion
       [numeroPagina]="numeroPagina()"
       [totalPaginas]="totalPaginas()"
