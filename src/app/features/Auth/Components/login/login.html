@@ -1,15 +1,15 @@
 <div class="login-container">
   <h2>Iniciar Sesión</h2>
 
-  <form (submit)="onLogin(); $event.preventDefault()">
+  <form [formRoot]="loginForm">
     <!-- Usuario -->
     <div class="form-group">
       <div class="input-container">
         <span class="input-icon">👤</span>
 
-        <input type="text" id="usuario" [formField]="loginForm.usuario" placeholder="Usuario" />
-        @if (loginForm.usuario().invalid()) {
-          @for (error of loginForm.usuario().errors(); track error) {
+        <input type="text" id="user" [formField]="loginForm.user" placeholder="Usuario" />
+        @if (loginForm.user().invalid()) {
+          @for (error of loginForm.user().errors(); track error) {
             <span>{{ error.message }}</span>
           }
         }
@@ -21,14 +21,9 @@
       <div class="input-container">
         <span class="input-icon">🔒</span>
 
-        <input
-          type="password"
-          id="password"
-          [formField]="loginForm.password"
-          placeholder="Contraseña"
-        />
-        @if (loginForm.password().invalid()) {
-          @for (error of loginForm.password().errors(); track error) {
+        <input type="password" id="pass" [formField]="loginForm.pass" placeholder="Contraseña" />
+        @if (loginForm.pass().invalid()) {
+          @for (error of loginForm.pass().errors(); track error) {
             <span>{{ error.message }}</span>
           }
         }
@@ -36,7 +31,9 @@
     </div>
 
     <!-- Botón -->
-    <button type="submit" [disabled]="!loginForm().valid()">Entrar</button>
+    <button type="submit" [disabled]="!loginForm().valid() || loginForm().submitting()">
+      {{ loginForm().submitting() ? 'Accediendo...' : 'Iniciar sesión' }}
+    </button>
 
     <!-- Recuperar contraseña -->
     <label> ¿Has olvidado tu contraseña? </label>
