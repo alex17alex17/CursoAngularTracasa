@@ -22,9 +22,19 @@ export class ExpedientesPage {
   porPagina = 5;
   eliminarSolicitado = signal(false);
   expedienteAEliminar = signal<Expediente | null>(null);
+  expedienteActualizado = signal<Expediente | null>(null);
 
   constructor() {
-    const state = history.state as { eliminarSolicitado?: boolean; expediente?: Expediente } | null;
+    const state = history.state as {
+      eliminarSolicitado?: boolean;
+      expediente?: Expediente;
+      expedienteActualizado?: Expediente;
+    } | null;
+
+    if (state?.expedienteActualizado) {
+      this.expedienteActualizado.set(state.expedienteActualizado);
+      this.recursoCambioFiltro.reload();
+    }
 
     if (state?.eliminarSolicitado) {
       this.eliminarSolicitado.set(true);
@@ -68,7 +78,16 @@ export class ExpedientesPage {
   cargandoExpedientes = this.recursoCambioFiltro.isLoading;
   errorExpedientes = this.recursoCambioFiltro.error;
   respuestaExpedientes = this.recursoCambioFiltro.value;
-  listaExpedientes = computed(() => this.respuestaExpedientes()?.datos ?? []);
+  listaExpedientes = computed(() => {
+    const expedientes = this.respuestaExpedientes()?.datos ?? [];
+    const actualizado = this.expedienteActualizado();
+
+    return actualizado
+      ? expedientes.map((expediente) =>
+          expediente.numero === actualizado.numero ? actualizado : expediente,
+        )
+      : expedientes;
+  });
   totalPaginas = computed(() =>
     Math.max(1, Math.ceil((this.respuestaExpedientes()?.total ?? 0) / this.porPagina)),
   );

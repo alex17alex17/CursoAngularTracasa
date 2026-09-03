@@ -33,6 +33,7 @@ export class BusquedaExpedientes {
   readonly displayedColumns = [
     'numero',
     'titulo',
+    'descripcion',
     'estado',
     'prioridad',
     'fechaAlta',

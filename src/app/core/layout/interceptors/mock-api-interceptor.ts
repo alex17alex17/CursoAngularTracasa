@@ -14,6 +14,7 @@ import {
   Rol,
   TokenPayload,
 } from '../../../features/Auth/models/auth-interface';
+import { Expediente } from '../../../features/Expedientes/models/expediente-interface';
 import { generarToken, leerToken } from '../../Auth/token.utils';
 
 const DURACION_SESION_MS = 15 * 60 * 1000;
@@ -81,7 +82,7 @@ const PERMISOS: Permiso[] = [
 
   {
     patron: /^\/api\/expedientes\/[^/]+$/,
-    metodos: ['DELETE'],
+    metodos: ['PUT', 'DELETE'],
     roles: ['EDITOR'],
   },
 ];
@@ -245,6 +246,34 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
 
     EXPEDIENTES_MOCK.splice(indice, 1);
     return responder(null, 204);
+  }
+
+  const expedienteActualizacionMatch =
+    metodo === 'PUT' ? url.match(/^\/api\/expedientes\/([^/]+)$/) : null;
+
+  if (expedienteActualizacionMatch) {
+    const numero = expedienteActualizacionMatch[1];
+    const indice = EXPEDIENTES_MOCK.findIndex((expediente) => expediente.numero === numero);
+
+    if (indice === -1) {
+      return error(404, 'Expediente no encontrado', url);
+    }
+
+    const cambios = (req.body ?? {}) as Partial<Expediente>;
+    const expedienteActualizado: Expediente = {
+      ...EXPEDIENTES_MOCK[indice],
+      ...cambios,
+      numero,
+      fechaAlta: cambios.fechaAlta
+        ? new Date(cambios.fechaAlta)
+        : EXPEDIENTES_MOCK[indice].fechaAlta,
+      fechaVencimiento: cambios.fechaVencimiento
+        ? new Date(cambios.fechaVencimiento)
+        : EXPEDIENTES_MOCK[indice].fechaVencimiento,
+    };
+
+    EXPEDIENTES_MOCK[indice] = expedienteActualizado;
+    return responder(expedienteActualizado);
   }
 
   return next(req);

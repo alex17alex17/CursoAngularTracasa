@@ -5,17 +5,17 @@
     <p class="intro">Actualiza los datos del expediente seleccionado.</p>
   </div>
 
-  <form class="expediente-form" (submit)="$event.preventDefault()">
+  <form class="expediente-form" #formulario="ngForm" (ngSubmit)="guardarExpediente(formulario)">
     <div class="form-columns">
       <div class="form-column">
         <label class="field">
           <span>Número</span>
-          <input type="text" name="numero" [value]="expediente()?.numero ?? ''" />
+          <input type="text" name="numero" [ngModel]="expediente()?.numero ?? ''" readonly />
         </label>
 
         <label class="field">
           <span>Estado</span>
-          <select name="estado" [value]="expediente()?.estado ?? ''">
+          <select name="estado" [ngModel]="expediente()?.estado ?? ''" required>
             <option value="abierto">Abierto</option>
             <option value="en_proceso">En proceso</option>
             <option value="cerrado">Cerrado</option>
@@ -24,24 +24,34 @@
 
         <label class="field">
           <span>Fecha alta</span>
-          <input type="date" name="fechaAlta" [value]="fechaComoTexto(expediente()?.fechaAlta)" />
+          <input
+            type="date"
+            name="fechaAlta"
+            [ngModel]="fechaComoTexto(expediente()?.fechaAlta)"
+            required
+          />
         </label>
 
         <label class="field">
           <span>Solicitante</span>
-          <input type="text" name="solicitante" [value]="expediente()?.solicitante ?? ''" />
+          <input
+            type="text"
+            name="solicitante"
+            [ngModel]="expediente()?.solicitante ?? ''"
+            required
+          />
         </label>
       </div>
 
       <div class="form-column">
         <label class="field">
           <span>Título</span>
-          <input type="text" name="titulo" [value]="expediente()?.titulo ?? ''" />
+          <input type="text" name="titulo" [ngModel]="expediente()?.titulo ?? ''" required />
         </label>
 
         <label class="field">
           <span>Prioridad</span>
-          <select name="prioridad" [value]="expediente()?.prioridad ?? ''">
+          <select name="prioridad" [ngModel]="expediente()?.prioridad ?? ''" required>
             <option value="alta">Alta</option>
             <option value="media">Media</option>
             <option value="baja">Baja</option>
@@ -53,20 +63,26 @@
           <input
             type="date"
             name="fechaVencimiento"
-            [value]="fechaComoTexto(expediente()?.fechaVencimiento)"
+            [ngModel]="fechaComoTexto(expediente()?.fechaVencimiento)"
+            required
           />
         </label>
 
         <label class="field">
           <span>Unidad</span>
-          <input type="text" name="unidad" [value]="expediente()?.unidad ?? ''" />
+          <input type="text" name="unidad" [ngModel]="expediente()?.unidad ?? ''" required />
         </label>
       </div>
     </div>
 
     <label class="field description-field">
       <span>Descripción</span>
-      <textarea name="descripcion" rows="5">{{ expediente()?.descripcion ?? '' }}</textarea>
+      <textarea
+        name="descripcion"
+        rows="5"
+        [ngModel]="expediente()?.descripcion ?? ''"
+        required
+      ></textarea>
     </label>
 
     <div class="form-actions">

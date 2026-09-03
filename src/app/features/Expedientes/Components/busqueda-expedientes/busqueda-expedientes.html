@@ -78,6 +78,11 @@
         <td mat-cell *matCellDef="let expediente">{{ expediente.titulo }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let expediente">{{ expediente.descripcion }}</td>
+      </ng-container>
+
       <ng-container matColumnDef="estado">
         <th mat-header-cell *matHeaderCellDef>Estado</th>
         <td mat-cell *matCellDef="let expediente">

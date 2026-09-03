@@ -38,4 +38,11 @@ export class ExpedienteClientService {
   eliminarExpediente(numero: string): Observable<void> {
     return this.httpClient.delete<void>(`/api/expedientes/${numero}`);
   }
+
+  actualizarExpediente(expediente: Expediente): Observable<Expediente> {
+    return this.httpClient.put<Expediente>(
+      `/api/expedientes/${expediente.numero}`,
+      expediente,
+    );
+  }
 }
