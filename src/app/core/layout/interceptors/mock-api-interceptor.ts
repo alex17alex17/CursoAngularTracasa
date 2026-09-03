@@ -85,6 +85,11 @@ const PERMISOS: Permiso[] = [
     metodos: ['PUT', 'DELETE'],
     roles: ['EDITOR'],
   },
+  {
+    patron: /^\/api\/expedientes$/,
+    metodos: ['POST'],
+    roles: ['EDITOR'],
+  },
 ];
 
 function responder<T>(body: T, status = 200): Observable<HttpEvent<unknown>> {
@@ -235,6 +240,22 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
 
   const expedienteEliminacionMatch =
     metodo === 'DELETE' ? url.match(/^\/api\/expedientes\/([^/]+)$/) : null;
+
+  if (metodo === 'POST' && url === '/api/expedientes') {
+    const nuevoExpediente = req.body as Expediente;
+
+    if (EXPEDIENTES_MOCK.some((expediente) => expediente.numero === nuevoExpediente.numero)) {
+      return error(409, 'Ya existe un expediente con ese número', url);
+    }
+
+    EXPEDIENTES_MOCK.push({
+      ...nuevoExpediente,
+      fechaAlta: new Date(nuevoExpediente.fechaAlta),
+      fechaVencimiento: new Date(nuevoExpediente.fechaVencimiento),
+    });
+
+    return responder(nuevoExpediente, 201);
+  }
 
   if (expedienteEliminacionMatch) {
     const numero = expedienteEliminacionMatch[1];

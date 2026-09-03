@@ -45,4 +45,8 @@ export class ExpedienteClientService {
       expediente,
     );
   }
+
+  crearExpediente(expediente: Expediente): Observable<Expediente> {
+    return this.httpClient.post<Expediente>('/api/expedientes', expediente);
+  }
 }
