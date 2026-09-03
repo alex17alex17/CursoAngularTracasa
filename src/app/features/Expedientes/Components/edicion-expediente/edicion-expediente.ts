@@ -11,7 +11,7 @@ import { ExpedienteClientService } from '../../services/expediente-client-servic
   styleUrl: './edicion-expediente.css',
 })
 export class EdicionExpediente {
-  expediente = signal<Expediente | null>(history.state.expediente ?? null);
+  expediente = signal<Expediente | null>(history.state?.expediente ?? null);
 
   constructor(
     private router: Router,

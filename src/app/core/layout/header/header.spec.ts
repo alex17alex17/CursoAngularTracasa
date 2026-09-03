@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { signal } from '@angular/core';
 
+import { AuthService } from '../../Services/auth-service';
 import { Header } from './header';
 
 describe('Header', () => {
@@ -9,6 +11,16 @@ describe('Header', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Header],
+      providers: [
+        {
+          provide: AuthService,
+          useValue: {
+            estaAutenticado: signal(false),
+            esUsuarioEditor: signal(false),
+            nombreUsuarioAutenticado: signal(null),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Header);
