@@ -5,7 +5,18 @@
       <h1 id="page-title">Búsqueda de expedientes</h1>
       <p class="intro">Consulta y localiza expedientes de forma rápida.</p>
     </div>
-    <span class="result-count">{{ (expedientesTabla() ?? []).length }} resultados</span>
+    <div class="heading-actions">
+      <button
+        mat-flat-button
+        color="primary"
+        class="new-expediente-button"
+        type="button"
+        (click)="darDeAltaExpediente()"
+      >
+        Nuevo expediente
+      </button>
+      <span class="result-count">{{ (expedientesTabla() ?? []).length }} resultados</span>
+    </div>
   </div>
 
   <form class="filters" (submit)="buscarExpedientes()">

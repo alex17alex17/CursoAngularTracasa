@@ -1,4 +1,5 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,6 +25,7 @@ import { BusquedaExpedientesPaginacion } from '../busqueda-expedientes-paginacio
   styleUrl: './busqueda-expedientes.css',
 })
 export class BusquedaExpedientes {
+  private router = inject(Router);
   expedientesTabla = input<Expediente[] | null>();
   numeroPagina = input(1);
   totalPaginas = input(1);
@@ -50,6 +52,10 @@ export class BusquedaExpedientes {
 
   buscarExpedientes(): void {
     this.filtroTabla.emit(this.filtros);
+  }
+
+  darDeAltaExpediente(): void {
+    this.router.navigate(['expedienteAlta']);
   }
 
   limpiarFiltros(): void {

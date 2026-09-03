@@ -8,7 +8,7 @@
         <span class="input-icon">👤</span>
 
         <input type="text" id="user" [formField]="loginForm.user" placeholder="Usuario" />
-        @if (loginForm.user().invalid()) {
+        @if (loginForm.user().invalid() && loginForm.user().touched()) {
           @for (error of loginForm.user().errors(); track error) {
             <span>{{ error.message }}</span>
           }
@@ -22,7 +22,7 @@
         <span class="input-icon">🔒</span>
 
         <input type="password" id="pass" [formField]="loginForm.pass" placeholder="Contraseña" />
-        @if (loginForm.pass().invalid()) {
+        @if (loginForm.pass().invalid() && loginForm.pass().touched()) {
           @for (error of loginForm.pass().errors(); track error) {
             <span>{{ error.message }}</span>
           }

@@ -69,13 +69,29 @@ h1 {
 }
 
 .result-count {
-  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 0 16px;
   color: var(--mat-sys-on-primary);
   background: var(--mat-sys-primary);
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 700;
   white-space: nowrap;
+}
+
+.heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.new-expediente-button {
+  height: 40px;
 }
 
 .filters {
@@ -242,6 +258,15 @@ tbody tr:hover {
   .result-count {
     display: inline-block;
     margin-top: 18px;
+  }
+
+  .heading-actions {
+    justify-content: flex-start;
+    margin-top: 18px;
+  }
+
+  .result-count {
+    margin-top: 0;
   }
 
   .filters {
