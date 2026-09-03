@@ -78,6 +78,12 @@ const PERMISOS: Permiso[] = [
     metodos: ['POST', 'PUT', 'PATCH', 'DELETE'],
     roles: ['EDITOR'],
   },
+
+  {
+    patron: /^\/api\/expedientes\/[^/]+$/,
+    metodos: ['DELETE'],
+    roles: ['EDITOR'],
+  },
 ];
 
 function responder<T>(body: T, status = 200): Observable<HttpEvent<unknown>> {
@@ -224,6 +230,21 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
       user: payload.user,
       rol: payload.rol,
     });
+  }
+
+  const expedienteEliminacionMatch =
+    metodo === 'DELETE' ? url.match(/^\/api\/expedientes\/([^/]+)$/) : null;
+
+  if (expedienteEliminacionMatch) {
+    const numero = expedienteEliminacionMatch[1];
+    const indice = EXPEDIENTES_MOCK.findIndex((expediente) => expediente.numero === numero);
+
+    if (indice === -1) {
+      return error(404, 'Expediente no encontrado', url);
+    }
+
+    EXPEDIENTES_MOCK.splice(indice, 1);
+    return responder(null, 204);
   }
 
   return next(req);

@@ -34,4 +34,8 @@ export class ExpedienteClientService {
         ),
       );
   }
+
+  eliminarExpediente(numero: string): Observable<void> {
+    return this.httpClient.delete<void>(`/api/expedientes/${numero}`);
+  }
 }

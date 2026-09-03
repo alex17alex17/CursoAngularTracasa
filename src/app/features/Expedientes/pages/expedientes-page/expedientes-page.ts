@@ -29,6 +29,7 @@ export class ExpedientesPage {
     if (state?.eliminarSolicitado) {
       this.eliminarSolicitado.set(true);
       this.expedienteAEliminar.set(state.expediente ?? null);
+      this.confirmarEliminacion();
     }
   }
 
@@ -107,8 +108,17 @@ export class ExpedientesPage {
       return;
     }
 
-    console.log('Eliminar expediente solicitado:', expediente);
-    this.eliminarSolicitado.set(false);
-    this.expedienteAEliminar.set(null);
+    this.servicioExpediente.eliminarExpediente(expediente.numero).subscribe({
+      next: () => {
+        this.eliminarSolicitado.set(false);
+        this.expedienteAEliminar.set(null);
+
+        if (this.listaExpedientes().length === 1 && this.numeroPagina() > 1) {
+          this.cambiarPagina(this.numeroPagina() - 1);
+        } else {
+          this.recursoCambioFiltro.reload();
+        }
+      },
+    });
   }
 }
