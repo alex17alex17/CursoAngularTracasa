@@ -4,7 +4,15 @@
 
   @if (autenticado()) {
     <div class="logout-panel">
-      <span class="user-label">USER - {{ nombreUsuarioAutenticado() }}</span>
+      <div class="user-profile">
+        <span class="user-avatar" aria-hidden="true">{{
+          (nombreUsuarioAutenticado() ?? '?').charAt(0).toUpperCase()
+        }}</span>
+        <span class="user-details">
+          <span class="user-label">Usuario</span>
+          <span class="user-name">{{ nombreUsuarioAutenticado() }}</span>
+        </span>
+      </div>
       <button matButton="filled" type="button" class="logout-button" (click)="logout.emit()">
         Salir
       </button>

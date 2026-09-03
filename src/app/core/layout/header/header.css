@@ -21,15 +21,81 @@
 .logout-panel {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   margin-left: auto;
 }
 
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.user-avatar {
+  display: grid;
+  flex: 0 0 36px;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid color-mix(in srgb, var(--mat-sys-on-primary) 35%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--mat-sys-on-primary) 16%, transparent);
+  color: var(--mat-sys-on-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.user-details {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
 .user-label {
-  font-size: 0.875rem;
-  opacity: 0.9;
+  color: color-mix(in srgb, var(--mat-sys-on-primary) 72%, transparent);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.user-name {
+  max-width: 180px;
+  overflow: hidden;
+  color: var(--mat-sys-on-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .logout-button {
   min-width: 96px;
+}
+
+@media (max-width: 600px) {
+  .header-toolbar {
+    padding: 0 16px;
+  }
+
+  .brand-name {
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .logout-panel {
+    gap: 8px;
+  }
+
+  .user-details {
+    display: none;
+  }
+
+  .logout-button {
+    min-width: auto;
+  }
 }
