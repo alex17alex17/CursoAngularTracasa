@@ -8,16 +8,14 @@
 
   padding: 40px;
 
-  background: white;
+  background: var(--mat-sys-surface-container);
 
   border-radius: 16px;
 
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px color-mix(in srgb, var(--mat-sys-shadow) 15%, transparent);
 
   box-sizing: border-box;
 }
-
 
 /* =========================
    TÍTULO
@@ -28,12 +26,11 @@
 
   text-align: center;
 
-  color: #1f2937;
+  color: var(--mat-sys-on-surface);
 
   font-size: 28px;
   font-weight: 600;
 }
-
 
 /* =========================
    GRUPOS
@@ -44,7 +41,6 @@
   margin-bottom: 20px;
 }
 
-
 /* =========================
    CONTENEDOR DEL INPUT
    ========================= */
@@ -54,7 +50,6 @@
 
   width: 100%;
 }
-
 
 /* =========================
    INPUT
@@ -70,12 +65,12 @@
 
   box-sizing: border-box;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--mat-sys-outline);
   border-radius: 8px;
 
-  background-color: #f9fafb;
+  background-color: var(--mat-sys-surface-container-low);
 
-  color: #1f2937;
+  color: var(--mat-sys-on-surface);
 
   font-size: 15px;
 
@@ -84,25 +79,21 @@
   transition: all 0.2s ease;
 }
 
-
 /* Placeholder */
 
 .input-container input::placeholder {
-  color: #9ca3af;
+  color: var(--mat-sys-on-surface-variant);
 }
-
 
 /* Focus */
 
 .input-container input:focus {
-  background-color: white;
+  background-color: var(--mat-sys-surface);
 
-  border-color: #2563eb;
+  border-color: var(--mat-sys-primary);
 
-  box-shadow:
-    0 0 0 3px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mat-sys-primary) 12%, transparent);
 }
-
 
 /* =========================
    ICONO
@@ -118,11 +109,10 @@
 
   font-size: 18px;
 
-  color: #6b7280;
+  color: var(--mat-sys-on-surface-variant);
 
   pointer-events: none;
 }
-
 
 /* =========================
    BOTÓN
@@ -140,9 +130,9 @@
   border: none;
   border-radius: 8px;
 
-  background-color: #2563eb;
+  background-color: var(--mat-sys-primary);
 
-  color: white;
+  color: var(--mat-sys-on-primary);
 
   font-size: 16px;
   font-weight: 600;
@@ -152,16 +142,13 @@
   transition: all 0.2s ease;
 }
 
-
 /* Hover */
 
 .login-container button:hover:not(:disabled) {
-  background-color: #1d4ed8;
+  background-color: var(--mat-sys-primary-container);
 
-  box-shadow:
-    0 5px 12px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 5px 12px color-mix(in srgb, var(--mat-sys-primary) 25%, transparent);
 }
-
 
 /* Pulsar */
 
@@ -169,15 +156,13 @@
   transform: scale(0.98);
 }
 
-
 /* Deshabilitado */
 
 .login-container button:disabled {
-  background-color: #93c5fd;
+  background-color: var(--mat-sys-surface-variant);
 
   cursor: not-allowed;
 }
-
 
 /* =========================
    RECUPERAR CONTRASEÑA
@@ -188,7 +173,7 @@
 
   text-align: center;
 
-  color: #6b7280;
+  color: var(--mat-sys-on-surface-variant);
 
   font-size: 14px;
 
@@ -197,18 +182,15 @@
   transition: color 0.2s ease;
 }
 
-
 .login-container label:hover {
-  color: #2563eb;
+  color: var(--mat-sys-primary);
 }
-
 
 /* =========================
    MÓVIL
    ========================= */
 
 @media (max-width: 480px) {
-
   .login-container {
     padding: 30px 25px;
   }
@@ -216,5 +198,4 @@
   .login-container h2 {
     font-size: 24px;
   }
-
 }

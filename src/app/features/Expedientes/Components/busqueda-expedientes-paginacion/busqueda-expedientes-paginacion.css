@@ -14,10 +14,10 @@
 .paginacion__boton {
   min-width: 7rem;
   padding: 0.6rem 1rem;
-  border: 1px solid #1f5f7a;
+  border: 1px solid var(--mat-sys-primary);
   border-radius: 0.35rem;
-  background-color: #1f5f7a;
-  color: #fff;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
   cursor: pointer;
   font: inherit;
   transition:
@@ -27,14 +27,14 @@
 }
 
 .paginacion__boton:hover:not(:disabled) {
-  border-color: #16455a;
-  background-color: #16455a;
+  border-color: var(--mat-sys-primary-container);
+  background-color: var(--mat-sys-primary-container);
 }
 
 .paginacion__boton:disabled {
-  border-color: #c8d0d4;
-  background-color: #e8edef;
-  color: #7a858a;
+  border-color: var(--mat-sys-outline-variant);
+  background-color: var(--mat-sys-surface-variant);
+  color: var(--mat-sys-on-surface-variant);
   cursor: not-allowed;
 }
 
@@ -44,10 +44,10 @@
   justify-content: center;
   min-width: 2.25rem;
   height: 2.25rem;
-  border: 1px solid #1f5f7a;
+  border: 1px solid var(--mat-sys-primary);
   border-radius: 50%;
-  background-color: #fff;
-  color: #1f5f7a;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-primary);
   text-align: center;
   font-weight: 600;
 }

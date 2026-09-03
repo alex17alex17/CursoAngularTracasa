@@ -2,15 +2,15 @@
   display: block;
   width: min(1000px, calc(100% - 40px));
   margin: 42px auto;
-  color: #172b4d;
+  color: var(--mat-sys-on-surface);
 }
 
 .form-page {
   padding: 32px;
-  background: #f8fbff;
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: var(--mat-sys-surface-container-low);
+  border: 1px solid var(--mat-sys-outline-variant);
   border-radius: 12px;
-  box-shadow: 0 22px 45px rgba(31, 67, 114, 0.2);
+  box-shadow: 0 22px 45px color-mix(in srgb, var(--mat-sys-shadow) 20%, transparent);
 }
 
 .page-heading {
@@ -19,7 +19,7 @@
 
 .eyebrow {
   margin: 0 0 8px;
-  color: #087f8c;
+  color: var(--mat-sys-primary);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -28,18 +28,18 @@
 
 h1 {
   margin: 0;
-  color: #102a43;
+  color: var(--mat-sys-on-surface);
   font-size: clamp(1.65rem, 3vw, 2.35rem);
   letter-spacing: 0;
 }
 
 .intro {
   margin: 8px 0 0;
-  color: #627d98;
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .field-error {
-  color: #b3261e;
+  color: var(--mat-sys-on-error-container);
   font-size: 0.78rem;
   font-weight: 600;
 }
@@ -62,7 +62,7 @@ h1 {
 }
 
 .field > span {
-  color: #486581;
+  color: var(--mat-sys-on-surface-variant);
   font-size: 0.78rem;
   font-weight: 700;
 }
@@ -73,9 +73,9 @@ textarea {
   width: 100%;
   min-width: 0;
   padding: 0 12px;
-  color: #243b53;
-  background: #fff;
-  border: 1px solid #bcccdc;
+  color: var(--mat-sys-on-surface);
+  background: var(--mat-sys-surface);
+  border: 1px solid var(--mat-sys-outline);
   border-radius: 6px;
   font: inherit;
   box-sizing: border-box;
@@ -96,8 +96,8 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 3px solid rgba(8, 127, 140, 0.18);
-  border-color: #087f8c;
+  outline: 3px solid color-mix(in srgb, var(--mat-sys-primary) 18%, transparent);
+  border-color: var(--mat-sys-primary);
 }
 
 .description-field {
@@ -130,25 +130,25 @@ textarea:focus {
 }
 
 .cancel-button {
-  color: #52606d;
-  background: #fff;
-  border: 1px solid #bcccdc;
+  color: var(--mat-sys-on-surface-variant);
+  background: var(--mat-sys-surface);
+  border: 1px solid var(--mat-sys-outline);
 }
 
 .cancel-button:hover {
-  background: #f0f4f8;
-  border-color: #9fb3c8;
+  background: var(--mat-sys-surface-container-high);
+  border-color: var(--mat-sys-outline);
 }
 
 .create-button {
-  color: #fff;
-  background: #087f8c;
-  border: 1px solid #087f8c;
+  color: var(--mat-sys-on-primary);
+  background: var(--mat-sys-primary);
+  border: 1px solid var(--mat-sys-primary);
 }
 
 .create-button:hover {
-  background: #056873;
-  border-color: #056873;
+  background: var(--mat-sys-primary-container);
+  border-color: var(--mat-sys-primary-container);
 }
 
 @media (max-width: 640px) {
