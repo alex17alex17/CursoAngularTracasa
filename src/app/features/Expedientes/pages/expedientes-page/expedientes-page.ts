@@ -116,6 +116,7 @@ export class ExpedientesPage {
 
   editarExpediente(expediente: Expediente): void {
     this.router.navigate(['expedienteEdicion', expediente.numero], {
+      queryParams: this.route.snapshot.queryParams,
       state: { expediente },
     });
   }

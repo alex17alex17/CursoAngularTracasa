@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Expediente } from '../../models/expediente-interface';
 import { ExpedienteClientService } from '../../services/expediente-client-service';
 
@@ -15,6 +15,7 @@ export class EdicionExpediente {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private servicioExpediente: ExpedienteClientService,
   ) {}
 
@@ -23,7 +24,9 @@ export class EdicionExpediente {
   }
 
   cancelar(): void {
-    this.router.navigate(['expedienteBusqueda']);
+    this.router.navigate(['expedienteBusqueda'], {
+      queryParams: this.route.snapshot.queryParams,
+    });
   }
 
   guardarExpediente(formulario: NgForm): void {
@@ -51,6 +54,7 @@ export class EdicionExpediente {
     this.servicioExpediente.actualizarExpediente(expedienteActualizado).subscribe({
       next: (expedienteGuardado) =>
         this.router.navigate(['expedienteBusqueda'], {
+          queryParams: this.route.snapshot.queryParams,
           state: { expedienteActualizado: expedienteGuardado },
         }),
     });
@@ -58,6 +62,7 @@ export class EdicionExpediente {
 
   eliminarExpediente(): void {
     this.router.navigate(['expedienteBusqueda'], {
+      queryParams: this.route.snapshot.queryParams,
       state: {
         eliminarSolicitado: true,
         expediente: this.expediente(),
