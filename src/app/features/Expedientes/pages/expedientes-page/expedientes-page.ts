@@ -2,8 +2,6 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { BusquedaExpedientes } from '../../Components/busqueda-expedientes/busqueda-expedientes';
-import { AltaExpediente } from '../../Components/alta-expediente/alta-expediente';
-import { EdicionExpediente } from '../../Components/edicion-expediente/edicion-expediente';
 import { FiltrosBusqueda } from '../../models/expediente-busqueda';
 import { Expediente } from '../../models/expediente-interface';
 import { ExpedienteClientService } from '../../services/expediente-client-service';
@@ -11,7 +9,7 @@ import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-expedientes-page',
-  imports: [BusquedaExpedientes, AltaExpediente, EdicionExpediente],
+  imports: [BusquedaExpedientes],
   templateUrl: './expedientes-page.html',
   styleUrl: './expedientes-page.css',
 })
